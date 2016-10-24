@@ -1,0 +1,4 @@
+<h1><%= @movie_info["Title"] %></h1>
+<p>Year: <%= @movie_info["Year"] %></p>
+<p><%= image_tag @movie_info["Poster"], id: 'movie_poster' %><%= @movie_info["Plot"] %></p>
+<%= link_to 'Back', :back %>
