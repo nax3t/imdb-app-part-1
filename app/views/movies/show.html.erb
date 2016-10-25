@@ -1,5 +1,27 @@
-<h1><%= @movie.title %></h1>
-<p><strong>Year</strong>: <%= @movie.year %></p>
-<p><strong>Plot</strong>: <%= @movie.plot %></p>
-<p><%= image_tag @movie.poster, width: '150px' %></p>
-<%= link_to 'Back', :back %>
+<div class="row">
+	<div class="col-md-8">
+		<%= image_tag @movie.poster, id: 'movie_poster' %>
+		<h1><%= @movie.title %></h1>
+		<p><strong>Year</strong>: <%= @movie.year %></p>
+		<p><strong>Plot</strong>: <%= @movie.plot %></p>
+		<%= link_to 'Back', :back %>
+	</div>
+	<div class="col-md-4">
+		<h3>Reviews:</h3>
+		<% @movie.reviews.each do |review| %>
+			<% if review.user == current_user %>
+				<%= link_to edit_review_path review do %>
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				<% end %>
+				<%= link_to review, method: :delete, data: { confirm: 'Are you sure?' } do %>
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				<% end %>	
+			<% end %>
+			<strong><%= review.user.email %></strong>: <%= review.body %>
+			<hr>
+		<% end %>
+		<% unless @movie.reviews.map(&:user_id).include?(current_user.id) %>
+			<%= render 'reviews/form' %>
+		<% end %>
+	</div>
+</div>

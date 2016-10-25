@@ -54,6 +54,7 @@ class MoviesController < ApplicationController
 
   def show
     # find_movie being run before_action
+    @review = Review.new
   end
 
   def destroy

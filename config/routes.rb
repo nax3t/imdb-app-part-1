@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 	
-	resources :movies, only: [:index, :show, :create, :destroy]
+	resources :movies, only: [:index, :show, :create, :destroy] do
+		resources :reviews, except: [:index, :new, :show], shallow: true
+	end
 
 	# search movies route
   get 'search' => 'movies#search' # search_path => /search
