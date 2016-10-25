@@ -2,6 +2,26 @@ class MoviesController < ApplicationController
   # before_action :find_movie, only: [:show, :destroy]
   
   def index
+    @movies = current_user.movies
+  end
+
+  def create
+    @movies = Movie.all
+    if @movies.map(&:imdb_id).include?(movie_params[:imdb_id])
+      @movie = Movie.find_by(imdb_id: movie_params[:imdb_id])
+      @movie.users << current_user
+      flash[:notice] = "#{@movie.title} successfully favorited."
+      redirect_to @movie
+    else
+      @movie = current_user.movies.build(movie_params)
+      if current_user.save
+        flash[:notice] = "#{@movie.title} successfully favorited."
+        redirect_to @movie
+      else
+        flash[:alert] = "Unable to favorite movie."
+        redirect_to root_path
+      end
+    end
   end
   
   def search
@@ -21,7 +41,8 @@ class MoviesController < ApplicationController
 		end
   end
   
-  def details  
+  def details
+    @movie = Movie.new
   	imdb_id = params[:imdb_id]
   	base_url = "http://www.omdbapi.com/?i="
   	end_point = base_url + imdb_id + '&plot=full'
@@ -29,9 +50,6 @@ class MoviesController < ApplicationController
   	response = RestClient.get(end_point)
 
   	@movie_info = JSON.parse(response.body)
-  end
-
-  def create
   end
 
   def show
@@ -46,6 +64,6 @@ class MoviesController < ApplicationController
     # end
 
     def movie_params
-        params.require(:movie).permit(:title, :year, :plot, :imdb_id)
+        params.require(:movie).permit(:title, :year, :plot, :imdb_id, :poster)
     end
 end
