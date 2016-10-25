@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  # before_action :find_movie, only: [:show, :destroy]
+  before_action :find_movie, only: [:show, :destroy]
   
   def index
     @movies = current_user.movies
@@ -53,16 +53,20 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
+    # find_movie being run before_action
   end
 
   def destroy
+    # find_movie being run before_action
+    current_user.movies.delete(@movie)
+    flash[:alert] = "Movie successfully deleted!"
+    redirect_to movies_path
   end
 
   private
-    # def find_movie
-    #     @movie = Movie.find(params[:id])
-    # end
+    def find_movie
+      @movie = Movie.find(params[:id])
+    end
 
     def movie_params
         params.require(:movie).permit(:title, :year, :plot, :imdb_id, :poster)
