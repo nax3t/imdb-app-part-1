@@ -1,6 +1,7 @@
 <h1><%= @movie_info["Title"] %></h1>
+<%= image_tag @movie_info["Poster"], id: 'movie_poster' %>
 <p>Year: <%= @movie_info["Year"] %></p>
-<p><%= image_tag @movie_info["Poster"], id: 'movie_poster' %><%= @movie_info["Plot"] %></p>
+<p><%= @movie_info["Plot"] %></p>
 <%= simple_form_for(@movie) do |f| %>
 	<%= f.hidden_field :title, :value => @movie_info["Title"] %>
 	<%= f.hidden_field :year, :value => @movie_info["Year"] %>
