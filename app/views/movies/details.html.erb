@@ -1,5 +1,9 @@
 <h1><%= @movie_info["Title"] %></h1>
-<%= image_tag @movie_info["Poster"], id: 'movie_poster' %>
+<% if @movie_info["Poster"] == "N/A" %>
+	<%= image_tag '400.jpeg', width: '150px' %><br>
+<% else %>
+  <%= image_tag @movie_info["Poster"], id: 'movie_poster' %><br>
+<% end %>
 <p>Year: <%= @movie_info["Year"] %></p>
 <p><%= @movie_info["Plot"] %></p>
 <%= simple_form_for(@movie) do |f| %>

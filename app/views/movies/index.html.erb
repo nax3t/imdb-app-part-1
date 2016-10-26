@@ -5,7 +5,11 @@
 	<div class="col-md-4 text-center">
 		<div class="thumbnail">
 			<%= link_to movie do %>
-		    <%= image_tag movie.poster, width: '150px' %><br>
+		    <% if movie.poster == "N/A" %>
+		    	<%= image_tag '400.jpeg', width: '150px' %><br>
+		    <% else %>
+		      <%= image_tag movie.poster, width: '150px' %><br>
+		    <% end %>
 	    <% end %>
 			<div class="caption">
 		    <h3><%= movie.title %></h3>
