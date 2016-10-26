@@ -1,5 +1,21 @@
-<h1>My Favorite Movies</h1>
-
+<div class="row">
+	<div class="col-md-12">
+		<h1>My Favorite Movies</h1>
+	</div>
+</div>
+<div class="row">
+	<%= form_tag(movies_path, method: "get", class: "navbar-form navbar-left") do %>
+	  <div class="form-group col-md-8 floating-label-form-group controls">
+  	  <%= text_field_tag :search, nil, placeholder: 'Search favorites', class: 'form-control' %>
+	  </div>
+	  <div class="col-md-4">
+		  <%= submit_tag("Search", class: 'btn btn-default') %>
+	  </div>
+	<% end %>	
+	<div class="col-md-12">
+		<hr>
+	</div>
+</div>
 <div class="row">
 <% @movies.each do |movie| %>
 	<div class="col-md-4 text-center">

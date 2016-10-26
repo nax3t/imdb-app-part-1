@@ -2,7 +2,11 @@ class MoviesController < ApplicationController
   before_action :find_movie, only: [:show, :destroy]
   
   def index
-    @movies = current_user.movies
+    if params[:search]
+      @movies = current_user.movies.where("title ILIKE ?", "%#{params[:search]}%")
+    else
+      @movies = current_user.movies
+    end
   end
 
   def create
@@ -27,6 +31,7 @@ class MoviesController < ApplicationController
   def search
   	base_url = 'http://www.omdbapi.com/?s='
   	search_term = params[:q]
+    @title = search_term
   	end_point = base_url + search_term
 
   	response = RestClient.get(end_point)
