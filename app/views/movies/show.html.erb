@@ -17,7 +17,7 @@
 					<i class="fa fa-trash" aria-hidden="true"></i>
 				<% end %>	
 			<% end %>
-			<strong><%= review.user.email %></strong>: <%= review.body %>
+			<strong><%= review.user.username %></strong>: <%= review.body %>
 			<hr>
 		<% end %>
 		<% unless @movie.reviews.map(&:user_id).include?(current_user.id) %>
